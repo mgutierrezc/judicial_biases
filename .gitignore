@@ -1,0 +1,10 @@
+\__pycache__
+judges_database
+*.db
+*.xlsx
+*.ods
+*.bin
+*.json
+\aux_data
+.ipynb_checkpoints/
+custom_modules_corpus.egg-info/
