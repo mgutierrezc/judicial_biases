@@ -1,7 +1,9 @@
 # Measuring Biases in judges using textual data
-The idea of this project was to obtain a measure of gender bias using publicly available data from [judicial cases in Peru](https://cej.pj.gob.pe/cej/forms/busquedaform.html) and word embeddings.
+Judges can suffer from behavioral biases that could affect their decision-making during part of their daily activities. This is especially important in developing countries such as Peru, where the public sector faces several issues when trying to provide an optimal provision of goods and services to its citizens. Hence, finding a way to measure them is key in order to show and mitigate the effects of such biases. 
 
-To achieve this goal, the pipeline of this repo did the following
+This project aims to tackle this challenge using natural language processing to obtain a measure of gender bias from publicly available data from [judicial cases in Peru](https://cej.pj.gob.pe/cej/forms/busquedaform.html).
+
+The pipeline of this repo does the following
 
 1. Create a parsed Corpus for each judge found on the sample for all the available years
 2. Create word embeddings for each judge using this data and Word2Vec
@@ -9,9 +11,30 @@ To achieve this goal, the pipeline of this repo did the following
     3.1. Gender Career (Gender vs Career/Household oriented chores)
     3.2. Gender Moral (Gender vs Good/Bad)
 
-The original idea comes from this [Kenya paper](http://users.nber.org/~dlchen/papers/Kenya_Courts_In_Group_Bias.pdf) which uses Glove instead of Word2Vec and doesn't work with textual data in spanish. As the original scripts didn't tackle those challenges and needed to be improved in terms of abstraction/softcoding/documentation, they were recreated from scratch and the final version is the one of this repository.
+**Note:** The original idea comes from this [Kenya paper](http://users.nber.org/~dlchen/papers/Kenya_Courts_In_Group_Bias.pdf) which uses Glove instead of Word2Vec and doesn't work with textual data in spanish. As the original scripts didn't tackle those challenges and needed to be improved in terms of abstraction/softcoding/documentation, they were recreated from scratch and the final version is the one of this repository.
 
-The statistics behind the methodology to obtain the slants can be found on page 41. 
+## Statistical Overview
+
+### Obtaining the embeddings
+The slants are obtained from word embeddings created for each judge using the judicial information of the cases they've worked on. 
+
+These embeddings were built using [Word2Vec](https://www.tensorflow.org/text/tutorials/word2vec#:~:text=word2vec%20is%20not%20a%20singular,downstream%20natural%20language%20processing%20tasks.) with the Continuous Bag of Words (CBOW) approach. 
+
+### Creating the required dimensions
+
+The embeddings for the 5 most common words associated to male and female concepts on the data were averaged to create the `male` and `female` dimension, respectively. Then, the gennder dimension is defined as the difference between the `male` and `female` dimensions, i.e.
+
+```math
+\overrightarrow{gender} = \frac{ \sum male_{n} }{N}  - \frac{ \sum female_{n} }{N}
+```
+
+Where ```math male_{n}``` and ```math female_{n}``` represent the n-th male/female word from each dimension
+
+
+For the career slant, two dimensions were created: `career` and familiy; and, for the moral ones, `good` and `bad`.
+
+**Note:** A more thorough explanation can be on page 41 of the [Kenya paper](http://users.nber.org/~dlchen/papers/Kenya_Courts_In_Group_Bias.pdf).
+
 
 ## Pipeline Overview
 
