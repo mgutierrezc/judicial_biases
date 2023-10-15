@@ -3,7 +3,6 @@ import numpy as np
 import sys, os, re
 import csv, tqdm, pickle, json
 import sqlite3
-from collections import Counter
 from tqdm import tqdm
 from cleaning_tools.corpus_cleaner_funcs import *
 from cleaning_tools.ner_sentiment_detection import *
@@ -11,10 +10,7 @@ from cleaning_tools.ner_sentiment_detection import *
 maxInt = sys.maxsize
 parameters_json = "./parameters.json"
 
-while True:
-    # decrease the maxInt value by factor 10 
-    # as long as the OverflowError occurs.
-
+while True: # snippet to avoid OverflowError when reading csvs
     try:
         csv.field_size_limit(maxInt)
         break
@@ -53,7 +49,10 @@ def inner_merge(cases_df: pd.core.frame.DataFrame, case_id_df: pd.core.frame.Dat
 
 
 def detect_mult_judges(judge_name):
-    #print(f"judge: {judge_name}, type: {type(judge_name)}")
+    """
+    Detects whether a case has a single or multiple judges assigned
+    """
+    
     if isinstance(judge_name, str):
         if judge_name.count(",") >= 2 or judge_name.count(".") >= 2:
             return "Multiple"
@@ -61,10 +60,6 @@ def detect_mult_judges(judge_name):
             return "Single"
     else:
         return "No name"
-
-
-def df_filtered_judge(df, judge_name):
-    return df[df['Juez:'] == judge_name]
 
 
 def read_pickle(folder_path: str, file_name: str):

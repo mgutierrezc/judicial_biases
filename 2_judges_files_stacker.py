@@ -1,9 +1,7 @@
 import pandas as pd
 import numpy as np
-import sys, os, re
-import csv, tqdm, pickle, json
-import sqlite3
-from collections import Counter
+import sys
+import tqdm, json
 from tqdm import tqdm
 from cleaning_tools.corpus_cleaner_funcs import *
 from cleaning_tools.ner_sentiment_detection import *
@@ -11,7 +9,6 @@ from create_judges_files import *
 
 maxInt = sys.maxsize
 parameters_json = "./parameters.json"
-
 
 if __name__ == "__main__":
     parameters = json.load(open(parameters_json))  

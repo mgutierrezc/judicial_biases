@@ -10,8 +10,6 @@ from sklearn.utils import resample
 from gensim.models import Word2Vec
 from statistics import median
 
-maxInt = sys.maxsize
-
 # loading parameters
 parameters_json = "./parameters.json"
 parameters = json.load(open(parameters_json))
