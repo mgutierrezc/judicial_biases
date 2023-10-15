@@ -1,17 +1,16 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import pandas as pd
-import sys, csv, tqdm, spacy, nltk, pickle, re, logging
+import tqdm, spacy, nltk, pickle, re, logging
 from sklearn.utils import resample
-from multiprocessing import Pool
 
 logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s',
                     level=logging.INFO)
                   
                     
-def spanish_cleaner(txt_file):
-    
+def spanish_cleaner(txt_file: str) -> list:
+    """
+    Cleans the inputted text following spanish grammatical rules
+    """
+
     text = txt_file
     text = re.sub(r"(&[a-zA-Z]*;)", " ", text)  # the txt files had some unwanted text like &rsquo; this line removes such text
     text = text.lower()
@@ -80,6 +79,7 @@ def spanish_sentence_cleaner(df, column_data: str) -> list:
     Cleaning involves the removal of punctuation, stop words and 
     encoding characters
     """
+
     logging.in1("--Sencence cleaner--")
     text_data = list(df[column_data]) # working with text data column
 
@@ -107,6 +107,7 @@ def top_words(cleaned_sentences: list, num_common_words=50000) -> list:
     Obtaining a list with the N most common words in
     current text
     """
+
     logging.info("--Top words in text--")
 
     word_list = [] # list with all words
@@ -125,6 +126,7 @@ def creating_train_sample(cleaned_sentences: list, top_n_words: list) -> list:
     Creates a bootstraping sample with sentences that contain at least
     one word from the most frequent ones
     """
+
     logging.info("--Creating training sample--")
     bootstrap_docs = resample(cleaned_sentences, replace=True, n_samples=len(cleaned_sentences))
     output = []

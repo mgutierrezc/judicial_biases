@@ -5,7 +5,7 @@ import csv, tqdm, pickle, json
 import sqlite3
 from tqdm import tqdm
 from cleaning_tools.corpus_cleaner_funcs import *
-from cleaning_tools.ner_sentiment_detection import *
+from cleaning_tools.ner_gender_detection import *
 
 maxInt = sys.maxsize
 parameters_json = "./parameters.json"
@@ -226,6 +226,7 @@ def get_judges_list(dataframe, path: str, file_name) -> list:
 if __name__ == "__main__":
     parameters = json.load(open(parameters_json))  
 
+    # setting up main parameters
     local_path = parameters["paths"]["unix_paths"]["out_directory"]
     year = parameters["parameters"]["year"]
     judges_subfolder = local_path + "/judges_dfs"
@@ -236,6 +237,8 @@ if __name__ == "__main__":
     conn = sqlite3.connect(local_path + "/judges_database")
 
     # reading stopwords
+    male_pronouns = parameters["male_pronouns"]
+    female_pronouns = parameters["female_pronouns"]
     stopwords = nltk.corpus.stopwords.words('spanish')
     stopwords = [word for word in stopwords if word not in male_pronouns and word not in female_pronouns]
     

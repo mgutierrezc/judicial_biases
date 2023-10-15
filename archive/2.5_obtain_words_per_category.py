@@ -5,7 +5,7 @@ import csv, tqdm, pickle, json
 from collections import Counter
 from tqdm import tqdm
 from cleaning_tools.corpus_cleaner_funcs import *
-from cleaning_tools.ner_sentiment_detection import *
+from cleaning_tools.ner_gender_detection import *
 from create_judges_files import *
 
 maxInt = sys.maxsize

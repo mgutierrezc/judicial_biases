@@ -1,10 +1,11 @@
-import nltk, spacy, scipy
+import nltk, spacy, scipy, json
 import regex as re
-from nltk import pos_tag
 import numpy as np
 import gender_guesser.detector as gender
-from transformers import AutoTokenizer, BertModel
 from collections import Counter
+
+# parameters
+parameters_json = "./parameters.json"
 
 # functions
 def distance_words(word: str, comparison_word: str, model: object) -> float:
@@ -250,6 +251,7 @@ if __name__ == "__main__":
     stopwords = nltk.corpus.stopwords.words('spanish')
     gender_detector = gender.Detector()
     nlp = spacy.load("es_core_news_sm")
+    parameters = json.load(open(parameters_json))  
     
     # processing text
     cleaned_text = " ".join(spanish_cleaner(text, stopwords)) # cleaning for stopwords
