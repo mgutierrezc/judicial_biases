@@ -1,4 +1,6 @@
 # Measuring Biases in judges using textual data
+
+## Introduction
 Judges can suffer from behavioral biases that could affect their decision-making during part of their daily activities. This is especially important in developing countries such as Peru, where the public sector faces several issues when trying to provide an optimal provision of goods and services to its citizens. Hence, finding a way to measure them is key in order to show and mitigate the effects of such biases. 
 
 This project aims to tackle this challenge using natural language processing to obtain a measure of gender bias from publicly available data from [judicial cases in Peru](https://cej.pj.gob.pe/cej/forms/busquedaform.html).
